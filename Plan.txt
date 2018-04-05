@@ -1,4 +1,12 @@
 JOB1:
+    Find the average rating per city for both open and closed businesses
+    Optional: Include number of open/closed businesses
+    
+    
+    *** Work in progress ***
+JOB2:
     Look at the ratings at the business that have closed - see if there's a correlation to the ratings and it being closed
     
     Find a correlation per city, if any
+    
+    Use a partitioner for each city (should have 11 reducers/files)
