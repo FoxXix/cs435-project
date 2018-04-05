@@ -1,0 +1,4 @@
+JOB1:
+    Look at the ratings at the business that have closed - see if there's a correlation to the ratings and it being closed
+    
+    Find a correlation per city, if any
