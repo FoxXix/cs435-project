@@ -10,18 +10,18 @@ public static class profile1Partitioner extends Partitioner<Text, NullWritable> 
             return 0;
         }
         if (numReduceTasks == 6){ // change logic for top 5 cities and everything else
-            Character partitionKey = key.toString().toLowerCase().charAt(0);
-            if (partitionKOpey >= 'a' && partitionKey <= 'd')
+            String partitionKey = key.toString().toLowerCase();
+            if (partitionKey.equals("las vegas"))
                 return 0;
-            if (partitionKey >= 'e' && partitionKey <= 'k')
+            if (partitionKey.equals("phoenix"))
                 return 1;
-            if (partitionKey >= 'l' && partitionKey <= 'p')
+            if (partitionKey.equals("toronto"))
                 return 2;
-            if (partitionKey >= 'q' && partitionKey <= 't')
+            if (partitionKey.equals("charlotte"))
                 return 3;
-            if (partitionKey >= 'u' && partitionKey <= 'z')
+            if (partitionKey.equals("scottsdale"))
                 return 4;
         }
-        return 0;
+        return 5;
     }
 }
