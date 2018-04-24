@@ -1,11 +1,12 @@
 import org.apache.hadoop.mapreduce.Partitioner;
 import java.io.IOException;
 import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 
-public static class profile1Partitioner extends Partitioner<Text, NullWritable> {
+public class OpenPartitioner extends Partitioner<Text, Text> {
     @Override
-    public int getPartition(Text key, NullWritable value, int numReduceTasks){ 
+    public int getPartition(Text key, Text value, int numReduceTasks){ 
         if (key.toString().isEmpty()){
             return 0;
         }
