@@ -6,24 +6,34 @@ import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 
 
-public class OpenReducer extends Reducer<Text, Text, Text, DoubleWritable> {
+public class OpenReducer extends Reducer<Text, Text, Text, Text> {
         public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-        DoubleWritable totalAverage = new DoubleWritable();
-        double numerator = 0, denominator = 0;
+        double totalClosedAverage = 0;
+        double totalOpenAverage = 0;
+        double O_numerator = 0, O_denominator = 0, C_numerator = 0, C_denominator = 0;
             
             for (Text val : values) {
                 String[] cityInfo = val.toString().split(",");
                 
-                double stars = Double.parseDouble(cityInfo[0]);
-                int numReviews = Integer.parseInt(cityInfo[1]);
-                int isOpen = Integer.parseInt(cityInfo[2]);
+                Double stars = Double.parseDouble(cityInfo[0]);
+                Double numReviews = Double.parseDouble(cityInfo[1]);
+                Double isOpen = Double.parseDouble(cityInfo[2]);
                 
-                numerator += (stars * numReviews);
-                denominator += numReviews;
+                if (isOpen == 1) {
+                    O_numerator += (stars * numReviews);
+                    O_denominator += numReviews;
+                } else {
+                    C_numerator += (stars * numReviews);
+                    C_denominator += numReviews;
+                }
+                
+              
             }
             
-            totalAverage.set(numerator / denominator);
+            totalOpenAverage = (O_numerator / O_denominator);
+            totalClosedAverage = (C_numerator / C_denominator);
             
-            context.write(key, totalAverage);
+            context.write(key, new Text("AVERAGE OPEN: " + Double.toString(totalOpenAverage)
+                                        + "\t AVERAGE CLOSED: " + Double.toString(totalClosedAverage)));
         }
     }
