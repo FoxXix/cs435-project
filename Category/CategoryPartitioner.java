@@ -1,15 +1,16 @@
 import org.apache.hadoop.mapreduce.Partitioner;
 import java.io.IOException;
 import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 
-public class OpenPartitioner extends Partitioner<Text, Text> {
+public class CategoryPartitioner extends Partitioner<Text, IntWritable> {
     @Override
-    public int getPartition(Text key, Text value, int numReduceTasks){ 
+    public int getPartition(Text key, IntWritable value, int numReduceTasks){ 
     
         if (numReduceTasks == 6){ // change logic for top 5 cities and everything else
-            String partitionKey = key.toString().toLowerCase();
+            String partitionKey = key.toString().split(",")[0].toLowerCase();
             if (partitionKey.equals("las vegas"))
                 return 0;
             if (partitionKey.equals("phoenix"))

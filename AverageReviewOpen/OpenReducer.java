@@ -10,7 +10,7 @@ public class OpenReducer extends Reducer<Text, Text, Text, Text> {
         public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
         double totalClosedAverage = 0;
         double totalOpenAverage = 0;
-        double O_numerator = 0, O_denominator = 0, C_numerator = 0, C_denominator = 0;
+        double O_numerator = 0, O_denominator = 0, C_numerator = 0, C_denominator = 0, total_reviews = 0;
             
             for (Text val : values) {
                 String[] cityInfo = val.toString().split(",");
@@ -27,13 +27,14 @@ public class OpenReducer extends Reducer<Text, Text, Text, Text> {
                     C_denominator += numReviews;
                 }
                 
-              
+              total_reviews += numReviews;
             }
             
             totalOpenAverage = (O_numerator / O_denominator);
             totalClosedAverage = (C_numerator / C_denominator);
             
             context.write(key, new Text("AVERAGE OPEN: " + Double.toString(totalOpenAverage)
-                                        + "\t AVERAGE CLOSED: " + Double.toString(totalClosedAverage)));
+                                        + "\t AVERAGE CLOSED: " + Double.toString(totalClosedAverage)
+                                        + "\t TOTAL REVIEWS: " + Double.toString(total_reviews)));
         }
     }
