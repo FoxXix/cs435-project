@@ -31,4 +31,5 @@ public class CategoryReducer extends Reducer<Text, IntWritable, Text, Text> {
                                         + "\t" + "NUMBER OF BUSINESSES: " + Integer.toString(totalBusinesses)));
             }
         }
+        
     }
