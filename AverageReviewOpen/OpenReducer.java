@@ -7,10 +7,12 @@ import org.apache.hadoop.io.Text;
 
 
 public class OpenReducer extends Reducer<Text, Text, Text, Text> {
+        
+        // Input: <City, [avg stars, # review, is open]>
         public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-        double totalClosedAverage = 0;
-        double totalOpenAverage = 0;
-        double O_numerator = 0, O_denominator = 0, C_numerator = 0, C_denominator = 0, total_reviews = 0;
+            double totalClosedAverage = 0;
+            double totalOpenAverage = 0;
+            double O_numerator = 0, O_denominator = 0, C_numerator = 0, C_denominator = 0, total_reviews = 0;
             
             for (Text val : values) {
                 String[] cityInfo = val.toString().split(",");
