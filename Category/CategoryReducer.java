@@ -7,6 +7,8 @@ import org.apache.hadoop.io.Text;
 
 
 public class CategoryReducer extends Reducer<Text, IntWritable, Text, Text> {
+        
+        // INPUT K-V: <{city,category}, [0, 1, 0, ...]>
         public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
         
             double isClosed = 0;
@@ -23,6 +25,7 @@ public class CategoryReducer extends Reducer<Text, IntWritable, Text, Text> {
                 totalBusinesses++;
             }
             
+            // Write out ratio if the number of businesses is greater than threshold
             double closedToOpenRatio = isClosed / isOpen;
             if (totalBusinesses >= 100) {
                 context.write(new Text("CITY: " + key.toString().split(",")[0] + "\t" +
