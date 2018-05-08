@@ -51,11 +51,13 @@ public class Top10Mapper extends Mapper<LongWritable, Text, Text, DoubleWritable
         
         categoryToHighRatioMap.put(Double.parseDouble(ratio), category);
         
+        // Only keep top 10 values
         if(categoryToHighRatioMap.size() > 10) {
             categoryToHighRatioMap.remove(categoryToHighRatioMap.firstKey());
         }
     }
     
+    // Write out top 10 values
     protected void cleanup(Context context) throws IOException, InterruptedException {
         for(Map.Entry<Double, String> entry : categoryToHighRatioMap.entrySet()) {
             context.write(new Text(entry.getValue()), new DoubleWritable(entry.getKey()));
