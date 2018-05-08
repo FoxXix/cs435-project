@@ -9,6 +9,9 @@ import org.apache.hadoop.io.Text;
 public class CategoryMapper extends Mapper<LongWritable, Text, Text, IntWritable>{
     private final static IntWritable one = new IntWritable(1);
     private Text word = new Text();
+    
+    // INPUT K-V: <dummy key, line>
+    // OUTPUT K-V: <{city,category}, open/closed (1/0)>
     public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         //preprocess
         if (!value.toString().isEmpty()) {
